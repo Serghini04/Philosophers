@@ -47,8 +47,11 @@ t_philo *parsing(int ac, char **av)
 	{
 		data->info_philo[i].index = i;
 		data->info_philo[i].data = data;
+		data->info_philo[i].t_live = data->t_die;
 		pthread_mutex_init(&data->forks[i], NULL);
 		i++;
 	}
+	data->s_time = my_time();
+	data->if_die = 1;
 	return (data);
 }

@@ -1,5 +1,5 @@
 
-FILE = philo.c utils/ft_atoi.c utils/parsing.c
+FILE = philo.c utils/ft_atoi.c utils/parsing.c utils/my_time.c
 
 FILE_OBJ = ${FILE:.c=.o}
 
