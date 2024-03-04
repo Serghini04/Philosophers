@@ -30,12 +30,12 @@ t_philo *parsing(int ac, char **av)
 	    return (write(2, "Error in t_sleep\n", 17), free(data), NULL);
 	if (ac == 6)
 	{
-		data->meat = ft_atoi(av[5]);
-		if (data->meat <= 0)
+		data->nb_meals = ft_atoi(av[5]);
+		if (data->nb_meals <= 0)
 		    return (write(2, "Error in meat\n", 15), free(data), NULL);
 	}
 	else
-		data->meat = -1;
+		data->nb_meals = -1;
 	data->info_philo = malloc(sizeof(t_index_info) * data->nb_philo);
 	if (!data->info_philo)
 		return (free(data), NULL);
@@ -48,6 +48,7 @@ t_philo *parsing(int ac, char **av)
 		data->info_philo[i].index = i;
 		data->info_philo[i].data = data;
 		data->info_philo[i].t_live = data->t_die;
+		data->info_philo[i].nb_eat = 0;
 		pthread_mutex_init(&data->forks[i], NULL);
 		i++;
 	}

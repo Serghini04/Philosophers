@@ -3,23 +3,31 @@
 void	*check_die(void	*info)
 {
 	t_philo	*data;
-	int				time;
-	int				i;
+	int		time;
+	int		i;
+	int		cout;
+
 
 	data = (t_philo *)info;
 	while (data->if_die)
 	{
 		i = 0;
+		cout = 0;
 		while (i < data->nb_philo)
 		{
 			time = data->info_philo[i].t_live - (my_time() - data->s_time);
+			if (data->nb_meals == data->info_philo[i].nb_eat)
+				cout++;
 			if (time <= 0)
 			{
 				printf("%ld		%d died\n", my_time() - data->s_time, i + 1);
 				data->if_die = 0;
 				return NULL;
-				//exit(1);
-				//my_clean(data);
+			}
+			if (data->nb_philo == cout)
+			{
+				data->if_die = 0;
+				return NULL;
 			}
 			usleep(100);
 			i++;
@@ -35,7 +43,6 @@ void *ft(void *info)
 	data = (t_index_info *)info;
 	while (data->data->if_die == 1)
 	{
-
 		pthread_mutex_lock(&data->data->forks[data->index]);
 		if (data->data->if_die)
 			printf("%ld		%d has taken a forks\n", my_time() - data->data->s_time, data->index + 1);
@@ -50,6 +57,7 @@ void *ft(void *info)
 			printf("%ld		%d has taken a forks\n", my_time() - data->data->s_time, data->index + 1);
 			printf("%ld		%d is eating\n", my_time() - data->data->s_time, data->index + 1);
 			data->t_live += data->data->t_die;
+			data->nb_eat++;
 			usleep(data->data->t_eat * 1000);
 		}
 		pthread_mutex_unlock(&data->data->forks[data->index]);
@@ -61,7 +69,7 @@ void *ft(void *info)
 		if (data->data->if_die)
 		printf("%ld		%d id thinking\n", my_time() - data->data->s_time, data->index + 1);
 	}
-	return NULL;
+	return (NULL);
 }
 
 int	main(int ac, char **av)

@@ -23,7 +23,7 @@ struct	s_philo
 	int				t_eat;
 	int				t_sleep;
 	int				if_die;
-	int				meat;
+	int				nb_meals;
 };
 
 struct s_index_info
@@ -32,6 +32,7 @@ struct s_index_info
 	t_philo		*data;
 	int			t_live;
 	int			index;
+	int			nb_eat;
 };
 
 t_philo	*parsing(int ac, char **av);
