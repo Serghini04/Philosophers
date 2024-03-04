@@ -13,7 +13,6 @@ typedef struct s_index_info t_index_info;
 
 struct	s_philo
 {
-	pthread_mutex_t	mutex;
 	pthread_mutex_t	*forks;
 	t_index_info	*info_philo;			
 	pthread_t		checker;

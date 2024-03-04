@@ -42,7 +42,6 @@ t_philo *parsing(int ac, char **av)
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->nb_philo);
 	if (!data->forks)
 		return (free(data->info_philo), free(data), NULL);
-	pthread_mutex_init(&data->mutex, NULL);
 	while (i < data->nb_philo)
 	{
 		data->info_philo[i].index = i;
