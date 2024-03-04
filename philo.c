@@ -21,6 +21,7 @@ void	*check_die(void	*info)
 				//exit(1);
 				//my_clean(data);
 			}
+			usleep(100);
 			i++;
 		}
 	}
@@ -48,8 +49,8 @@ void *ft(void *info)
 		{
 			printf("%ld		%d has taken a forks\n", my_time() - data->data->s_time, data->index + 1);
 			printf("%ld		%d is eating\n", my_time() - data->data->s_time, data->index + 1);
-			usleep(data->data->t_eat * 1000);
 			data->t_live += data->data->t_die;
+			usleep(data->data->t_eat * 1000);
 		}
 		pthread_mutex_unlock(&data->data->forks[data->index]);
 		pthread_mutex_unlock(&data->data->forks[(data->index + 1) % data->data->nb_philo]);
