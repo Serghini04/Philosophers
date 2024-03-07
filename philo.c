@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/07 18:18:46 by meserghi          #+#    #+#             */
+/*   Updated: 2024/03/07 21:36:25 by meserghi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	*check_die(void	*info)
@@ -6,7 +18,6 @@ void	*check_die(void	*info)
 	int		time;
 	int		i;
 	int		cout;
-
 
 	data = (t_philo *)info;
 	while (data->if_die)
@@ -41,20 +52,24 @@ void *ft(void *info)
 	t_index_info	*data;
 
 	data = (t_index_info *)info;
-	while (data->data->if_die == 1)
+	while (data->data->if_die)
 	{
+		if (data->data->if_die)
+			printf("%ld		%d is thinking\n", my_time() - data->data->s_time, data->index + 1);
 		pthread_mutex_lock(&data->data->forks[data->index]);
 		if (data->data->if_die)
-			printf("%ld		%d has taken a forks\n", my_time() - data->data->s_time, data->index + 1);
+			printf("%ld		%d has taken a fork\n", my_time() - data->data->s_time, data->index + 1);
 		if (data->data->nb_philo == 1)
 		{
 			usleep(data->data->t_die * 1000);
 			break;
 		}
+		if (data->data->if_die)
+			printf("%ld		%d is thinking\n", my_time() - data->data->s_time, data->index + 1);
 		pthread_mutex_lock(&data->data->forks[(data->index + 1) % data->data->nb_philo]);
 		if (data->data->if_die)
 		{
-			printf("%ld		%d has taken a forks\n", my_time() - data->data->s_time, data->index + 1);
+			printf("%ld		%d has taken a fork\n", my_time() - data->data->s_time, data->index + 1);
 			printf("%ld		%d is eating\n", my_time() - data->data->s_time, data->index + 1);
 			data->t_live += data->data->t_die;
 			data->nb_eat++;
@@ -66,8 +81,6 @@ void *ft(void *info)
 		printf("%ld		%d is sleeping\n", my_time() - data->data->s_time, data->index + 1);
 		if (data->data->if_die)
 		usleep(data->data->t_sleep * 1000);
-		if (data->data->if_die)
-		printf("%ld		%d id thinking\n", my_time() - data->data->s_time, data->index + 1);
 	}
 	return (NULL);
 }
@@ -81,18 +94,15 @@ int	main(int ac, char **av)
 	data = parsing(ac, av);
 	if (!data)
 		return (-1);
+	data = create_thread_check(data);
+	if (!data)
+		return (-1);
 	while (i < data->nb_philo)
 	{
-		pthread_create(&data->info_philo[i].th, NULL, ft, &data->info_philo[i]);
-		usleep(50);
+		if (pthread_join(data->info_philo[i].th, NULL) != 0)
+			return (my_free(data), -1);
 		i++;
 	}
-	i = 0;
-	check_die(data);
-	while (i <data->nb_philo)
-	{
-		pthread_join(data->info_philo[i].th, NULL);
-		i++;
-	}
+	system("leaks philo");
 	return (0);
 }
