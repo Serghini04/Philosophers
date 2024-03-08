@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:22:49 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/07 21:27:21 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/08 12:59:12 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,6 @@ t_philo	*create_thread_check(t_philo *data)
 		usleep(50);
 		i++;
 	}
-	if (pthread_create(&data->checker, NULL, check_die, data) != 0)
-		return (my_free(data), NULL);
-	if (pthread_join(data->checker, NULL) != 0)
-		return (my_free(data), NULL);
+	check_die(data);
 	return (data);
 }

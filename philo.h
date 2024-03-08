@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:17:22 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/07 21:27:00 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/08 13:05:11 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_index_info t_index_info;
 struct	s_philo
 {
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	add;
 	t_index_info	*info_philo;
 	pthread_t		checker;
 	size_t			s_time;
@@ -54,5 +55,6 @@ size_t	my_time(void);
 void	*check_die(void	*info);
 void 	*ft(void *info);
 void	my_free(t_philo *data);
+void	my_sleep(size_t	time, t_index_info *data);
 
 #endif
