@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:18:46 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/08 23:26:17 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/08 23:46:45 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ void	*check_die(void	*info)
 		cout = 0;
 		while (i < data->nb_philo)
 		{
-			pthread_mutex_lock(&data->write);
+			pthread_mutex_lock(&data->die);
 			time = data->info_philo[i].t_live - (my_time() - data->s_time);
 			if (data->nb_meals == data->info_philo[i].nb_eat)
 				cout++;
-			pthread_mutex_unlock(&data->write);
+			pthread_mutex_unlock(&data->die);
 			if (time <= 0)
 			{
 				print_msg(&data->info_philo[i], "died\n");
@@ -66,10 +66,10 @@ void *ft(void *info)
 		print_msg(data, "has taken a fork\n");
 		print_msg(data, "is eating\n");
 		my_sleep(data->data->t_eat, data);
-		pthread_mutex_lock(&data->data->write);
+		pthread_mutex_lock(&data->data->die);
 		data->t_live += data->data->t_die;
 		data->nb_eat++;
-		pthread_mutex_unlock(&data->data->write);
+		pthread_mutex_unlock(&data->data->die);
 		print_msg(data, "is thinking\n");
 		pthread_mutex_unlock(&data->data->forks[data->index]);
 		pthread_mutex_unlock(&data->data->forks[(data->index + 1) % data->data->nb_philo]);
