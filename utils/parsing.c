@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:19:33 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/08 13:05:01 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/08 23:08:29 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,6 @@ t_philo	*parsing(int ac, char **av)
 	if (!data)
 		return (NULL);
 	data = init_philo(data);
-	pthread_mutex_init(&data->add, NULL);
+	pthread_mutex_init(&data->write, NULL);
 	return (data);
 }

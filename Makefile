@@ -6,15 +6,15 @@
 #    By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/07 18:22:05 by meserghi          #+#    #+#              #
-#    Updated: 2024/03/08 17:35:27 by meserghi         ###   ########.fr        #
+#    Updated: 2024/03/08 22:11:17 by meserghi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FILE = philo.c utils/ft_atoi.c utils/init_philo.c utils/parsing.c utils/my_time.c utils/my_free.c utils/my_sleep.c
+FILE = philo.c utils/ft_atoi.c utils/init_philo.c utils/parsing.c utils/my_time.c utils/my_free.c utils/my_sleep.c utils/routine.c
 
 FILE_OBJ = ${FILE:.c=.o}
 #-fsanitize=thread
-FLAGS = -Wall -Wextra -Werror -fsanitize=thread -g
+FLAGS = -Wall -Wextra -Werror
 
 NAME = philo
 

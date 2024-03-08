@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:18:46 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/08 18:01:09 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/08 23:26:17 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,22 @@ void	*check_die(void	*info)
 		cout = 0;
 		while (i < data->nb_philo)
 		{
-			pthread_mutex_lock(&data->add);
+			pthread_mutex_lock(&data->write);
 			time = data->info_philo[i].t_live - (my_time() - data->s_time);
 			if (data->nb_meals == data->info_philo[i].nb_eat)
 				cout++;
-			pthread_mutex_unlock(&data->add);
+			pthread_mutex_unlock(&data->write);
 			if (time <= 0)
 			{
-				pthread_mutex_lock(&data->add);
-				printf("%ld		%d died\n", my_time() - data->s_time, i + 1);
+				print_msg(&data->info_philo[i], "died\n");
 				data->if_die = 0;
-				pthread_mutex_unlock(&data->add);
 				return NULL;
 			}
 			if (data->nb_philo == cout)
 			{
-				pthread_mutex_lock(&data->add);
 				data->if_die = 0;
-				pthread_mutex_unlock(&data->add);
 				return NULL;
 			}
-			usleep(100);
 			i++;
 		}
 	}
@@ -60,39 +55,27 @@ void *ft(void *info)
 	data = (t_index_info *)info;
 	while (data->data->if_die)
 	{
-		if (data->data->if_die)
-			printf("%ld		%d is thinking\n", my_time() - data->data->s_time, data->index + 1);
 		pthread_mutex_lock(&data->data->forks[data->index]);
-		pthread_mutex_lock(&data->data->add);
-		if (data->data->if_die)
-			printf("%ld		%d has taken a fork\n", my_time() - data->data->s_time, data->index + 1);
-		pthread_mutex_unlock(&data->data->add);
+		print_msg(data, "has taken a fork\n");
 		if (data->data->nb_philo == 1)
 		{
-			usleep(data->data->t_die * 1000);
+			my_sleep(data->data->t_die, data);
 			break;
 		}
-		if (data->data->if_die)
-			printf("%ld		%d is thinking\n", my_time() - data->data->s_time, data->index + 1);
 		pthread_mutex_lock(&data->data->forks[(data->index + 1) % data->data->nb_philo]);
-		if (data->data->if_die)
-		{
-			printf("%ld		%d has taken a fork\n", my_time() - data->data->s_time, data->index + 1);
-			printf("%ld		%d is eating\n", my_time() - data->data->s_time, data->index + 1);
-			pthread_mutex_lock(&data->data->add);
-			data->t_live += data->data->t_die;
-			data->nb_eat++;
-			pthread_mutex_unlock(&data->data->add);
-			usleep(data->data->t_eat * 1000);
-		}
+		print_msg(data, "has taken a fork\n");
+		print_msg(data, "is eating\n");
+		my_sleep(data->data->t_eat, data);
+		pthread_mutex_lock(&data->data->write);
+		data->t_live += data->data->t_die;
+		data->nb_eat++;
+		pthread_mutex_unlock(&data->data->write);
+		print_msg(data, "is thinking\n");
 		pthread_mutex_unlock(&data->data->forks[data->index]);
 		pthread_mutex_unlock(&data->data->forks[(data->index + 1) % data->data->nb_philo]);
-		pthread_mutex_lock(&data->data->add);
+		print_msg(data, "is sleeping\n");
 		if (data->data->if_die)
-			printf("%ld		%d is sleeping\n", my_time() - data->data->s_time, data->index + 1);
-		pthread_mutex_unlock(&data->data->add);
-		if (data->data->if_die)
-			usleep(data->data->t_sleep * 1000);
+			my_sleep(data->data->t_sleep, data);
 	}
 	return (NULL);
 }
