@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:18:46 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/08 23:46:45 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/09 12:51:20 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,10 @@ void	*check_die(void	*info)
 			pthread_mutex_unlock(&data->die);
 			if (time <= 0)
 			{
+				pthread_mutex_lock(&data->die);
 				print_msg(&data->info_philo[i], "died\n");
 				data->if_die = 0;
+				pthread_mutex_unlock(&data->die);
 				return NULL;
 			}
 			if (data->nb_philo == cout)
