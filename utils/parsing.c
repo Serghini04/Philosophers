@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:19:33 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/08 23:30:44 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/09 16:26:26 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ t_philo	*check_input(int ac, char **av, t_philo *data)
 		return (NULL);
 	data->nb_philo = ft_atoi(av[1]);
 	if (data->nb_philo <= 0)
-		return (printf("Error nb philo > 60 \n"), free(data), NULL);
+		return (printf("Error nb philo > 0 \n"), free(data), NULL);
 	data->t_die = ft_atoi(av[2]);
-	if (data->t_die < 60)
-		return (printf("Error in t_die > 60 \n"), free(data), NULL);
+	if (data->t_die <= 0)
+		return (printf("Error in t_die > 0 \n"), free(data), NULL);
 	data->t_eat = ft_atoi(av[3]);
-	if (data->t_eat < 60)
-		return (printf("Error in t_eat > 60 \n"), free(data), NULL);
+	if (data->t_eat <= 0)
+		return (printf("Error in t_eat > 0 \n"), free(data), NULL);
 	data->t_sleep = ft_atoi(av[4]);
-	if (data->t_sleep < 60)
-		return (printf("Error in t_sleep > 60 \n"), free(data), NULL);
+	if (data->t_sleep <= 0)
+		return (printf("Error in t_sleep > 0 \n"), free(data), NULL);
 	if (ac == 6)
 	{
 		data->nb_meals = ft_atoi(av[5]);
@@ -57,5 +57,6 @@ t_philo	*parsing(int ac, char **av)
 	data = init_philo(data);
 	pthread_mutex_init(&data->write, NULL);
 	pthread_mutex_init(&data->die, NULL);
+	pthread_mutex_init(&data->add, NULL);
 	return (data);
 }

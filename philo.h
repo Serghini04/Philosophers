@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:17:22 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/08 23:29:47 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/09 13:23:22 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ struct	s_philo
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	write;
 	pthread_mutex_t	die;
+	pthread_mutex_t	add;
 	t_index_info	*info_philo;
 	pthread_t		checker;
 	size_t			s_time;

@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:18:46 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/09 12:51:20 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/09 15:57:37 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,24 @@ void	*check_die(void	*info)
 		{
 			pthread_mutex_lock(&data->die);
 			time = data->info_philo[i].t_live - (my_time() - data->s_time);
+			pthread_mutex_unlock(&data->die);
+			pthread_mutex_lock(&data->add);
 			if (data->nb_meals == data->info_philo[i].nb_eat)
 				cout++;
-			pthread_mutex_unlock(&data->die);
+			pthread_mutex_unlock(&data->add);
 			if (time <= 0)
 			{
-				pthread_mutex_lock(&data->die);
 				print_msg(&data->info_philo[i], "died\n");
+				pthread_mutex_lock(&data->add);
 				data->if_die = 0;
-				pthread_mutex_unlock(&data->die);
+				pthread_mutex_unlock(&data->add);
 				return NULL;
 			}
 			if (data->nb_philo == cout)
 			{
+				pthread_mutex_lock(&data->add);
 				data->if_die = 0;
+				pthread_mutex_unlock(&data->add);
 				return NULL;
 			}
 			i++;
@@ -55,7 +59,7 @@ void *ft(void *info)
 	t_index_info	*data;
 
 	data = (t_index_info *)info;
-	while (data->data->if_die)
+	while (1)
 	{
 		pthread_mutex_lock(&data->data->forks[data->index]);
 		print_msg(data, "has taken a fork\n");
@@ -70,14 +74,23 @@ void *ft(void *info)
 		my_sleep(data->data->t_eat, data);
 		pthread_mutex_lock(&data->data->die);
 		data->t_live += data->data->t_die;
-		data->nb_eat++;
 		pthread_mutex_unlock(&data->data->die);
+		pthread_mutex_lock(&data->data->add);
+		data->nb_eat++;
+		pthread_mutex_unlock(&data->data->add);
 		print_msg(data, "is thinking\n");
 		pthread_mutex_unlock(&data->data->forks[data->index]);
 		pthread_mutex_unlock(&data->data->forks[(data->index + 1) % data->data->nb_philo]);
 		print_msg(data, "is sleeping\n");
 		if (data->data->if_die)
 			my_sleep(data->data->t_sleep, data);
+		pthread_mutex_lock(&data->data->add);
+		if (data->data->if_die == 0)
+		{
+			pthread_mutex_unlock(&data->data->add);
+			break;
+		}
+		pthread_mutex_unlock(&data->data->add);
 	}
 	return (NULL);
 }
