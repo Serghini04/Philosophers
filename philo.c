@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:18:46 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/09 15:57:37 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/09 18:42:03 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	*check_die(void	*info)
 	int		cout;
 
 	data = (t_philo *)info;
-	while (data->if_die)
+	while (1)
 	{
 		i = 0;
 		cout = 0;
@@ -36,20 +36,27 @@ void	*check_die(void	*info)
 			if (time <= 0)
 			{
 				print_msg(&data->info_philo[i], "died\n");
-				pthread_mutex_lock(&data->add);
-				data->if_die = 0;
-				pthread_mutex_unlock(&data->add);
+				pthread_mutex_lock(&data->die);
+				data->if_die--;
+				pthread_mutex_unlock(&data->die);
 				return NULL;
 			}
 			if (data->nb_philo == cout)
 			{
-				pthread_mutex_lock(&data->add);
+				pthread_mutex_lock(&data->die);
 				data->if_die = 0;
-				pthread_mutex_unlock(&data->add);
+				pthread_mutex_unlock(&data->die);
 				return NULL;
 			}
 			i++;
 		}
+		pthread_mutex_lock(&data->die);
+		if (!data->if_die)
+		{
+			pthread_mutex_unlock(&data->die);
+			return (NULL);
+		}
+		pthread_mutex_unlock(&data->die);
 	}
 	return (NULL);
 }
@@ -82,15 +89,14 @@ void *ft(void *info)
 		pthread_mutex_unlock(&data->data->forks[data->index]);
 		pthread_mutex_unlock(&data->data->forks[(data->index + 1) % data->data->nb_philo]);
 		print_msg(data, "is sleeping\n");
-		if (data->data->if_die)
-			my_sleep(data->data->t_sleep, data);
-		pthread_mutex_lock(&data->data->add);
+		my_sleep(data->data->t_sleep, data);
+		pthread_mutex_lock(&data->data->die);
 		if (data->data->if_die == 0)
 		{
-			pthread_mutex_unlock(&data->data->add);
+			pthread_mutex_unlock(&data->data->die);
 			break;
 		}
-		pthread_mutex_unlock(&data->data->add);
+		pthread_mutex_unlock(&data->data->die);
 	}
 	return (NULL);
 }
