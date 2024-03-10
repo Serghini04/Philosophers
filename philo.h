@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:17:22 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/09 13:23:22 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/10 13:16:50 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_philo	*init_philo(t_philo	*data);
 t_philo	*create_thread_check(t_philo *data);
 long	ft_atoi(char *str);
 size_t	my_time(void);
-void	*check_die(void	*info);
+void	*check_die(t_philo	*data);
 void 	*ft(void *info);
 void	my_free(t_philo *data);
 void	my_sleep(size_t	time, t_index_info *data);

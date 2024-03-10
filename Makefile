@@ -6,7 +6,7 @@
 #    By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/07 18:22:05 by meserghi          #+#    #+#              #
-#    Updated: 2024/03/09 18:40:53 by meserghi         ###   ########.fr        #
+#    Updated: 2024/03/10 16:57:43 by meserghi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ FILE = philo.c utils/ft_atoi.c utils/init_philo.c utils/parsing.c utils/my_time.
 
 FILE_OBJ = ${FILE:.c=.o}
 #-fsanitize=thread
-FLAGS = -Wall -Wextra -Werror -fsanitize=thread -g
+FLAGS = -Wall -Wextra
 
 NAME = philo
 
