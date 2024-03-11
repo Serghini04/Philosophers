@@ -6,22 +6,22 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:17:22 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/11 14:29:01 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/11 16:01:27 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
-#define PHILO_H
+# define PHILO_H
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <pthread.h>
-#include <string.h>
-#include <sys/time.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <pthread.h>
+# include <string.h>
+# include <sys/time.h>
 
-typedef struct s_philo t_philo;
-typedef struct s_index_info t_index_info;
+typedef struct s_index_info	t_index_info;
+typedef struct s_philo		t_philo;
 
 struct	s_philo
 {
@@ -51,10 +51,10 @@ struct s_index_info
 t_philo	*parsing(int ac, char **av);
 t_philo	*init_philo(t_philo	*data);
 t_philo	*create_thread_check(t_philo *data);
-long	ft_atoi(char *str);
 size_t	my_time(void);
-void	*check_die(t_philo	*data);
-void 	*ft(void *info);
+long	ft_atoi(char *str);
+void	*ft(void *info);
+void	check_die(t_philo	*data);
 void	my_free(t_philo *data);
 void	my_sleep(size_t	time, t_index_info *data);
 void	print_msg(t_index_info *data, char *msg);

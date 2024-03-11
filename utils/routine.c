@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 21:32:35 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/11 14:33:50 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/11 15:13:16 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,23 @@ void	print_msg(t_index_info *data, char *msg)
 
 int	taking_forks(t_index_info *data)
 {
+	int	index_fork;
+
+	index_fork = (data->index + 1) % data->data->nb_philo;
 	pthread_mutex_lock(&data->data->forks[data->index]);
 	print_msg(data, "has taken a fork");
 	if (data->data->nb_philo == 1)
 		return (0);
-	pthread_mutex_lock(&data->data->forks[(data->index + 1) % data->data->nb_philo]);
+	pthread_mutex_lock(&data->data->forks[index_fork]);
 	print_msg(data, "has taken a fork");
 	return (1);
 }
+
 void	time_to_eating(t_index_info *data)
 {
+	int	index_fork;
+
+	index_fork = (data->index + 1) % data->data->nb_philo;
 	print_msg(data, "is eating");
 	pthread_mutex_lock(&data->add);
 	pthread_mutex_lock(&data->data->write);
@@ -44,10 +51,10 @@ void	time_to_eating(t_index_info *data)
 	pthread_mutex_unlock(&data->add);
 	my_sleep(data->data->t_eat, data);
 	pthread_mutex_unlock(&data->data->forks[data->index]);
-	pthread_mutex_unlock(&data->data->forks[(data->index + 1) % data->data->nb_philo]);
+	pthread_mutex_unlock(&data->data->forks[index_fork]);
 }
 
-void *ft(void *info)
+void	*ft(void *info)
 {
 	t_index_info	*data;
 
@@ -61,10 +68,8 @@ void *ft(void *info)
 		if (!taking_forks(data))
 			return (NULL);
 		time_to_eating(data);
-		pthread_mutex_lock(&data->data->write);
 		if (data->nb_eat == data->data->nb_meals)
 			return (pthread_mutex_unlock(&data->data->write), NULL);
-		pthread_mutex_unlock(&data->data->write);
 		print_msg(data, "is sleeping");
 		my_sleep(data->data->t_sleep, data);
 		print_msg(data, "is thinking");
