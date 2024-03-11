@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:18:46 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/11 16:07:24 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/11 23:05:09 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,13 @@ int	count_if_die(t_philo *data, int count, int i)
 	size_t	time;
 
 	if (data->nb_philo == count)
-	{
-		pthread_mutex_lock(&data->write);
-		data->if_die = 0;
-		pthread_mutex_unlock(&data->write);
 		return (1);
-	}
 	time = my_time() - data->info_philo[i].t_live;
 	if (time >= (size_t)data->t_die)
 	{
 		pthread_mutex_lock(&data->write);
-		data->if_die = 0;
 		printf("%zu		%d died\n", time, data->info_philo[i].index + 1);
+		data->if_die = 0;
 		pthread_mutex_unlock(&data->write);
 		return (1);
 	}
@@ -52,7 +47,7 @@ void	check_die(t_philo *data)
 			if (count_if_die(data, count, i))
 			{
 				pthread_mutex_unlock(&data->info_philo[i].add);
-				break ;
+				return ;
 			}
 			pthread_mutex_unlock(&data->info_philo[i].add);
 			i++;

@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 21:32:35 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/11 15:13:16 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/11 22:37:32 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,8 @@ void	time_to_eating(t_index_info *data)
 	index_fork = (data->index + 1) % data->data->nb_philo;
 	print_msg(data, "is eating");
 	pthread_mutex_lock(&data->add);
-	pthread_mutex_lock(&data->data->write);
 	data->t_live = my_time();
 	data->nb_eat++;
-	pthread_mutex_unlock(&data->data->write);
 	pthread_mutex_unlock(&data->add);
 	my_sleep(data->data->t_eat, data);
 	pthread_mutex_unlock(&data->data->forks[data->index]);
@@ -69,7 +67,7 @@ void	*ft(void *info)
 			return (NULL);
 		time_to_eating(data);
 		if (data->nb_eat == data->data->nb_meals)
-			return (pthread_mutex_unlock(&data->data->write), NULL);
+			return (NULL);
 		print_msg(data, "is sleeping");
 		my_sleep(data->data->t_sleep, data);
 		print_msg(data, "is thinking");

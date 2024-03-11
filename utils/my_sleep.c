@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 11:38:22 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/11 14:55:56 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/11 22:40:22 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	my_sleep(size_t	time, t_index_info *data)
 	size_t	pos;
 
 	pos = my_time();
+	(void)data;
 	while (my_time() - pos < time)
 	{
 		pthread_mutex_lock(&data->data->write);
@@ -26,5 +27,6 @@ void	my_sleep(size_t	time, t_index_info *data)
 			return ;
 		}
 		pthread_mutex_unlock(&data->data->write);
+		usleep(100);
 	}
 }
