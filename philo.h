@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:17:22 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/10 13:16:50 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/11 14:29:01 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ struct	s_philo
 {
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	write;
-	pthread_mutex_t	die;
-	pthread_mutex_t	add;
 	t_index_info	*info_philo;
 	pthread_t		checker;
 	size_t			s_time;
@@ -42,11 +40,12 @@ struct	s_philo
 
 struct s_index_info
 {
-	pthread_t	th;
-	t_philo		*data;
-	int			t_live;
-	int			index;
-	int			nb_eat;
+	pthread_mutex_t	add;
+	pthread_t		th;
+	t_philo			*data;
+	size_t			t_live;
+	int				index;
+	int				nb_eat;
 };
 
 t_philo	*parsing(int ac, char **av);

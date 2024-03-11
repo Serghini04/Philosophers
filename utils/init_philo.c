@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:22:49 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/10 12:15:56 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/11 14:30:10 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,20 @@ t_philo	*init_philo(t_philo	*data)
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->nb_philo);
 	if (!data->forks)
 		return (free(data->info_philo), free(data), NULL);
+	data->s_time = my_time();
+	data->if_die = 1;
 	while (i < data->nb_philo)
 	{
 		data->info_philo[i].index = i;
 		data->info_philo[i].data = data;
-		data->info_philo[i].t_live = data->t_die;
+		data->info_philo[i].t_live = data->s_time;
 		data->info_philo[i].nb_eat = 0;
 		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
 			return (my_free(data), NULL);
+		if (pthread_mutex_init(&data->info_philo[i].add, NULL) != 0)
+			return (my_free(data), NULL);
 		i++;
 	}
-	data->s_time = my_time();
-	data->if_die = 1;
 	return (data);
 }
 
@@ -48,7 +50,7 @@ t_philo	*create_thread_check(t_philo *data)
 		if (pthread_create(&data->info_philo[i].th, NULL, \
 								ft, &data->info_philo[i]) != 0)
 			return (my_free(data), NULL);
-		if (i % 2 == 0)
+		if (data->info_philo[i].index % 2 == 0)
 			usleep(100);
 		i++;
 	}
