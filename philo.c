@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:18:46 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/11 23:05:09 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/12 18:23:00 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,6 @@ int	main(int ac, char **av)
 		return (-1);
 	if (!create_thread_check(data))
 		return (-1);
-	while (i < data->nb_philo)
-	{
-		if (pthread_join(data->info_philo[i].th, NULL) != 0)
-			return (my_free(data), -1);
-		i++;
-	}
+	my_free(data);
 	return (0);
 }
