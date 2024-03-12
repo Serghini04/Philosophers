@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/03/07 18:22:05 by meserghi          #+#    #+#              #
-#    Updated: 2024/03/12 18:29:07 by meserghi         ###   ########.fr        #
+#    Created: 2024/03/12 18:29:15 by meserghi          #+#    #+#              #
+#    Updated: 2024/03/12 18:29:40 by meserghi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,14 +16,14 @@ FILE_OBJ = ${FILE:.c=.o}
 #-fsanitize=thread -g
 FLAGS = -Wall -Wextra -Werror
 
-NAME = philo
+NAME = philo_bonus
 
 all : ${NAME}
 
 ${NAME} : ${FILE_OBJ}
 	gcc ${FLAGS} ${FILE_OBJ} -o ${NAME}
 
-%.o : %.c philo.h
+%.o : %.c philo_bonus.h
 	gcc ${FLAGS} -c $< -o $@
 
 clean :
