@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:27:25 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/14 00:46:17 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/14 20:13:42 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ typedef struct s_philo
 	size_t			s_time;
 	int				nb_philo;
 	int				t_die;
-	int				if_die;
 	int				t_eat;
 	int				t_sleep;
+	int				del;
 	int				nb_meals;
 }	t_philo;
 
@@ -48,7 +48,7 @@ struct s_index_info
 	int			nb_eat;
 };
 
-void	my_sleep(size_t	time, t_index_info *data);
+void	my_sleep(size_t	time);
 void	create_process_checker(t_philo *data);
 void	routine_bonus(t_index_info *data);
 t_philo	*parsing(int ac, char **av);

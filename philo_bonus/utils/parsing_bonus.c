@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:27:31 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/13 22:21:29 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/14 20:12:58 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ t_philo	*check_input(int ac, char **av, t_philo *data)
 	}
 	else
 		data->nb_meals = -1;
-	data->if_die = 0;
 	return (data);
 }
 

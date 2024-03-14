@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 02:25:26 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/14 00:43:16 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:01:49 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,10 @@ t_philo	*init_philo(t_philo *data)
 	if (!data->info_philo)
 		return (free(data), NULL);
 	data->s_time = my_time();
-	data->if_die = 1;
 	while (i < data->nb_philo)
 	{
 		data->info_philo[i].index = i;
-		data->info_philo[i].nb_eat = 1;
+		data->info_philo[i].nb_eat = 0;
 		data->info_philo[i].data = data;
 		data->info_philo[i].t_live = data->s_time;
 		i++;
@@ -57,16 +56,15 @@ void	*checker(void *info)
 		if (time >= (size_t)data->data->t_die)
 		{
 			sem_wait(data->data->write);
+			//time = my_time() - data->data->s_time;
 			printf("%zu		%d died\n", time, data->index + 1);
-			// data->data->if_die = 0;
 			exit(1);
 		}
-		usleep(100);
 	}
 	return (NULL);
 }
 
-void	create_process_checker(t_philo *data)
+void	  create_process_checker(t_philo *data)
 {
 	int	i;
 
@@ -74,8 +72,8 @@ void	create_process_checker(t_philo *data)
 	while (++i < data->nb_philo)
 	{
 		data->info_philo[i].pr = fork();
-		if (data->info_philo[i].pr == -1)
-			(perror("fork error: "), exit(1));
+			if (data->info_philo[i].pr == -1)
+				(perror("fork error: "), exit(1));
 		if (data->info_philo[i].pr == 0)
 		{
 			pthread_create(&data->info_philo[i].th, NULL, checker, &data->info_philo[i]);
