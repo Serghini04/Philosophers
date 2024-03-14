@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_bonus.c                                      :+:      :+:    :+:   */
+/*   my_time_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 18:27:02 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/13 22:41:21 by meserghi         ###   ########.fr       */
+/*   Created: 2024/03/13 02:44:48 by meserghi          #+#    #+#             */
+/*   Updated: 2024/03/13 02:49:01 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_bonus.h"
+#include "../philo_bonus.h"
 
-int	main(int ac, char **av)
+size_t	my_time(void)
 {
-	t_philo	*data;
-	int		i;
+	struct timeval	time;
 
-	i = 0;
-	data = parsing(ac, av);
-	if (!data)
-		return (-1);
-	create_process_checker(data);
-	return (0);
+	if (gettimeofday(&time, NULL) == -1)
+		printf("Error gettimeofday\n");
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }

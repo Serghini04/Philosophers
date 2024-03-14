@@ -6,15 +6,16 @@
 #    By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 18:29:15 by meserghi          #+#    #+#              #
-#    Updated: 2024/03/12 18:29:40 by meserghi         ###   ########.fr        #
+#    Updated: 2024/03/13 22:24:03 by meserghi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FILE = philo.c utils/ft_atoi.c utils/init_philo.c utils/parsing.c utils/my_time.c utils/my_free.c utils/my_sleep.c utils/routine.c
-
+FILE = philo_bonus.c utils/ft_atoi_bonus.c utils/init_philo_bonus.c utils/parsing_bonus.c\
+	utils/my_time_bonus.c utils/my_sleep_bonus.c utils/routine_bonus.c
+#utils/my_free_bonus.c
 FILE_OBJ = ${FILE:.c=.o}
 #-fsanitize=thread -g
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 
 NAME = philo_bonus
 
