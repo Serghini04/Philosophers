@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:27:02 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/14 17:43:16 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:22:53 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ int	main(int ac, char **av)
 		{
 			i = -1;
 			while (++i < data->nb_philo)
-			{
 				kill(data->info_philo[i].pr, SIGQUIT);
-			}
 		}
 	}
 	return (0);

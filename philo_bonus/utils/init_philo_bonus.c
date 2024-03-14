@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 02:25:26 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/14 21:01:49 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:21:45 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ void	*checker(void *info)
 	while (1)
 	{
 		time = my_time() - data->t_live;
-		if (time >= (size_t)data->data->t_die)
+		if (time >= (size_t)data->data->t_die && data->nb_eat != 0)
 		{
 			sem_wait(data->data->write);
-			//time = my_time() - data->data->s_time;
+			time = my_time() - data->data->s_time;
 			printf("%zu		%d died\n", time, data->index + 1);
 			exit(1);
 		}
