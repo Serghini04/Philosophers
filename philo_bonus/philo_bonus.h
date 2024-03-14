@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:27:25 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/13 22:21:09 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/14 00:46:17 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <pthread.h>
 #include <sys/time.h>
+#include <signal.h>
 # include <sys/wait.h>
 # include <semaphore.h>
 

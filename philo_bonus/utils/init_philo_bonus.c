@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 02:25:26 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/13 23:02:11 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/14 00:43:16 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ t_philo	*init_philo(t_philo *data)
 		data->info_philo[i].t_live = data->s_time;
 		i++;
 	}
-	data->forks = sem_open("for", O_CREAT, 0644, data->nb_philo);
+	sem_unlink("forks");
+	sem_unlink("write");
+	data->forks = sem_open("forks", O_CREAT, 0644, data->nb_philo);
 	if (data->forks == SEM_FAILED)
 		(perror("sem forks: "), exit(1));
 	data->write = sem_open("write", O_CREAT, 0644, 1);
@@ -56,8 +58,7 @@ void	*checker(void *info)
 		{
 			sem_wait(data->data->write);
 			printf("%zu		%d died\n", time, data->index + 1);
-			data->data->if_die = 0;
-			sem_post(data->data->write);
+			// data->data->if_die = 0;
 			exit(1);
 		}
 		usleep(100);
@@ -78,8 +79,8 @@ void	create_process_checker(t_philo *data)
 		if (data->info_philo[i].pr == 0)
 		{
 			pthread_create(&data->info_philo[i].th, NULL, checker, &data->info_philo[i]);
-			routine_bonus(&data->info_philo[i]);
 			pthread_detach(data->info_philo[i].th);
+			routine_bonus(&data->info_philo[i]);
 			break;
 		}
 	}

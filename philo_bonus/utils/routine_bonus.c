@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 03:35:22 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/13 23:01:12 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/14 00:42:05 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,6 @@ void	routine_bonus(t_index_info *data)
 {
 	while (1)
 	{
-		sem_wait(data->data->write);
-		if (!data->data->if_die)
-		{
-			sem_post(data->data->write);
-			exit(1);
-		}
-		sem_post(data->data->write);
 		if (!taking_forks(data))
 			exit(1);
 		time_to_eating(data);
