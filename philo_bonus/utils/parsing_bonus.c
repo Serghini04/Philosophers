@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:27:31 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/15 01:01:01 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/15 22:40:15 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,11 @@ t_philo	*check_input(int ac, char **av, t_philo *data)
 
 t_philo	*parsing(int ac, char **av)
 {
-	t_philo *data;
+	t_philo	*data;
+	int		i;
 
 	data = NULL;
+	i = 0;
 	if (ac != 5 && ac != 6)
 	{
 		printf("invalid arg :\n");

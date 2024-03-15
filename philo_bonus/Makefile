@@ -6,7 +6,7 @@
 #    By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 18:29:15 by meserghi          #+#    #+#              #
-#    Updated: 2024/03/15 01:09:24 by meserghi         ###   ########.fr        #
+#    Updated: 2024/03/15 21:53:23 by meserghi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ FILE = philo_bonus.c utils/ft_atoi_bonus.c utils/init_philo_bonus.c utils/parsin
 #utils/my_free_bonus.c
 FILE_OBJ = ${FILE:.c=.o}
 #-fsanitize=thread -g
-FLAGS = -Wall -Wextra -Werror #-fsanitize=thread -g
+FLAGS = -Wall -Wextra -Werror
 NAME = philo_bonus
 
 all : ${NAME}

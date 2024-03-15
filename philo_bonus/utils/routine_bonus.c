@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 03:35:22 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/15 01:37:56 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/15 22:40:48 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	print_msg(t_index_info *data, char *msg)
 
 void	taking_forks(t_index_info *data)
 {
-
 	sem_wait(data->data->forks);
 	print_msg(data, "has taken a fork");
 	sem_wait(data->data->forks);
@@ -48,7 +47,7 @@ void	routine_bonus(t_index_info *data)
 		taking_forks(data);
 		time_to_eating(data);
 		if (data->nb_eat == data->data->nb_meals)
-			(my_free(data->data), exit(0));
+			exit(0);
 		print_msg(data, "is sleeping");
 		my_sleep(data->data->t_sleep);
 		print_msg(data, "is thinking");
