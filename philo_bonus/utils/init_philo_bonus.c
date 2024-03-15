@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 02:25:26 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/14 21:21:45 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/15 01:23:54 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@ t_philo	*init_philo(t_philo *data)
 	int	i;
 
 	i = 0;
+	sem_unlink("forks");
+	sem_unlink("write");
+	data->forks = sem_open("forks", O_CREAT, 0644, data->nb_philo);
+	if (data->forks == SEM_FAILED)
+		(free(data), exit(1));
+	data->write = sem_open("write", O_CREAT, 0644, 1);
+	if (data->write == SEM_FAILED)
+		(free(data), exit(1));
 	data->info_philo = malloc(sizeof(t_index_info) * data->nb_philo);
 	if (!data->info_philo)
 		return (free(data), NULL);
@@ -29,14 +37,6 @@ t_philo	*init_philo(t_philo *data)
 		data->info_philo[i].t_live = data->s_time;
 		i++;
 	}
-	sem_unlink("forks");
-	sem_unlink("write");
-	data->forks = sem_open("forks", O_CREAT, 0644, data->nb_philo);
-	if (data->forks == SEM_FAILED)
-		(perror("sem forks: "), exit(1));
-	data->write = sem_open("write", O_CREAT, 0644, 1);
-	if (data->write == SEM_FAILED)
-		(perror("sem write: "), exit(1));
 	return (data);
 }
 
@@ -53,13 +53,15 @@ void	*checker(void *info)
 	while (1)
 	{
 		time = my_time() - data->t_live;
-		if (time >= (size_t)data->data->t_die && data->nb_eat != 0)
+		if (time >= (size_t)data->data->t_die)
 		{
 			sem_wait(data->data->write);
 			time = my_time() - data->data->s_time;
 			printf("%zu		%d died\n", time, data->index + 1);
+			my_free(data->data);
 			exit(1);
 		}
+		usleep(100);
 	}
 	return (NULL);
 }
@@ -73,10 +75,11 @@ void	  create_process_checker(t_philo *data)
 	{
 		data->info_philo[i].pr = fork();
 			if (data->info_philo[i].pr == -1)
-				(perror("fork error: "), exit(1));
+				(my_free(data), exit(1));
 		if (data->info_philo[i].pr == 0)
 		{
-			pthread_create(&data->info_philo[i].th, NULL, checker, &data->info_philo[i]);
+			if (pthread_create(&data->info_philo[i].th, NULL, checker, &data->info_philo[i]) != 0)
+				(my_free(data), exit(0));
 			pthread_detach(data->info_philo[i].th);
 			routine_bonus(&data->info_philo[i]);
 			break;

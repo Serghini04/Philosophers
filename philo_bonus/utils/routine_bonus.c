@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 03:35:22 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/14 21:13:14 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/15 01:37:56 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	routine_bonus(t_index_info *data)
 		taking_forks(data);
 		time_to_eating(data);
 		if (data->nb_eat == data->data->nb_meals)
-			exit(0);
+			(my_free(data->data), exit(0));
 		print_msg(data, "is sleeping");
 		my_sleep(data->data->t_sleep);
 		print_msg(data, "is thinking");

@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:27:25 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/14 20:13:42 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/15 01:12:15 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef struct s_philo
 	int				t_die;
 	int				t_eat;
 	int				t_sleep;
-	int				del;
 	int				nb_meals;
 }	t_philo;
 
@@ -53,6 +52,7 @@ void	create_process_checker(t_philo *data);
 void	routine_bonus(t_index_info *data);
 t_philo	*parsing(int ac, char **av);
 size_t	my_time(void);
+void	my_free(t_philo *data);
 long	ft_atoi(char *str);
 t_philo	*init_philo(t_philo *data);
 #endif

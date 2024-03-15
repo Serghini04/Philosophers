@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:27:31 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/14 20:12:58 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/15 01:01:01 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,5 @@ t_philo	*parsing(int ac, char **av)
 	data = check_input(ac, av, data);
 	if (!data)
 		return (NULL);
-	if (!init_philo(data))
-		return (NULL);
-	return (data);
+	return (init_philo(data));
 }

@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:27:02 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/14 21:22:53 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/15 01:19:52 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ int	main(int ac, char **av)
 				kill(data->info_philo[i].pr, SIGQUIT);
 		}
 	}
+	//system("leaks philo_bonus");
 	return (0);
 }
