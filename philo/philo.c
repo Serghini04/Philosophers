@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:18:46 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/13 20:54:23 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/16 01:11:10 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	count_if_die(t_philo *data, int count, int i)
 	if (data->nb_philo == count)
 		return (1);
 	time = my_time() - data->info_philo[i].t_live;
-	if (time >= (size_t)data->t_die)
+	if (time >= (size_t)data->t_die && \
+								data->nb_meals != data->info_philo[i].nb_eat)
 	{
 		pthread_mutex_lock(&data->write);
 		printf("%zu		%d died\n", time, data->info_philo[i].index + 1);
