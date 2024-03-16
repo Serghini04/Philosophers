@@ -6,7 +6,7 @@
 /*   By: meserghi <meserghi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:19:03 by meserghi          #+#    #+#             */
-/*   Updated: 2024/03/07 18:19:09 by meserghi         ###   ########.fr       */
+/*   Updated: 2024/03/16 00:37:45 by meserghi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,7 @@ long	ft_atoi(char *str)
 			return (-1);
 		i++;
 	}
+	if (str[i] != '\0')
+		return (-1);
 	return (s * res);
 }
